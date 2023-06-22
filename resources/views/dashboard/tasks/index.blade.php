@@ -55,10 +55,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($get_tasks as $index => $task)
+                                @forelse($tasks as $index => $task)
                                     
                                     <tr>
-                                        <th scope="row">{{ $task->id }}</th>
+                                        <th scope="row">{{ $serialNumbers++ }}</th>
                                         <td class = "text-capitalize">{{$task->title}}</td>
                                         <td>{{date('d-m-Y h:i a', strtotime(strip_tags($task->created_at)))}}</td>
                                         <td class = "text-capitalize">{{$task->status}}</td>
@@ -96,19 +96,8 @@
                             </tbody>
                         </table> 
   
-                        <nav class="mt-4">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        {{ $tasks->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+
                     </div>
                 </div>
             </div>

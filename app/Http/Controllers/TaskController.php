@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskController extends Controller
 {
@@ -12,9 +14,23 @@ class TaskController extends Controller
     public function index(){
 
         $userCheck = auth()->user();
+        $tasks = [];
 
-        $get_tasks = Task::where('user_id', $userCheck->id)->latest()->get();
-        return view('dashboard.tasks.index', compact('get_tasks'));
+        $taskss = Task::where('user_id', $userCheck->id)->latest()->get();
+        $perPage = 3;
+        $currentPage = Paginator::resolveCurrentPage();
+        $currentItems = $taskss->slice(($currentPage - 1) * $perPage, $perPage);
+
+        $tasks = new LengthAwarePaginator($currentItems, $taskss->count(), $perPage, $currentPage, [
+
+            'path' => request()->url(),
+            'query' => request()->query()
+
+        ]);
+        
+        $serialNumbers = $tasks->firstItem();
+
+        return view('dashboard.tasks.index', ['tasks' => $tasks, 'serialNumbers' => $serialNumbers]);
 
     }
 
