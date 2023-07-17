@@ -163,7 +163,7 @@ class TaskController extends Controller
 
             }else{
 
-                return redirect()->back()->with('error', 'Something went wrong, please try again later');
+                return redirect()->back()->with('error', 'Something went wrong, please try again later!');
 
             }
         }

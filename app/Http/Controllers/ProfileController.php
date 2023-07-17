@@ -70,11 +70,11 @@ class ProfileController extends Controller
 
         if( $saveData ){
 
-            return redirect()->route('profile.show')->with('success', 'Profile details has been updated successfully');
+            return redirect()->route('profile.show')->with('success', 'Profile has been updated successfully');
 
         }else{
 
-            return back()->with('error', 'Something went wrong, try again later');
+            return back()->with('error', 'Something went wrong, try again later!');
 
         }
 
